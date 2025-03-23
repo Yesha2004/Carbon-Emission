@@ -1,0 +1,110 @@
+/* Global Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('/1000_F_439024603_pHjWAZrHOojIFLykqoG5YBv65zcomlMS.jpg') no-repeat center center/cover;
+    margin: 0;
+    padding: 0;
+    color: rgb(0, 0, 0);
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(255, 255, 255);
+    padding: 15px 30px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 90px;
+    height: 80px;
+    margin-right: 10px;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.navbar ul li a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.navbar ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Calculator Box */
+.calculator-box {
+    background: rgba(0, 128, 0, 0.7);
+    padding: 30px;
+    width: 60%;
+    margin: 50px auto;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Inputs */
+.input-field, .dropdown, .input-group input {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Input Groups */
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 5px;
+    margin: 10px auto;
+    width: 80%;
+}
+
+.input-group .icon {
+    padding: 10px;
+    background: #ddd;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.input-group input {
+    border: none;
+    padding: 10px;
+    flex: 1;
+    border-radius: 0;
+}
+
+/* Calculate Button */
+.calculate-btn {
+    background: white;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 60%;
+}
+
+.calculate-btn:hover {
+    background: lightgray;
+}
