@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-image: url('/1000_F_439024603_pHjWAZrHOojIFLykqoG5YBv65zcomlMS.jpg'); /* Use HD image */
+    background-size: cover; /* Ensures full-screen coverage */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    image-rendering: high-quality; /* Improves sharpness */
+}
+
+        .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgb(255, 255, 255);
+        padding: 15px 30px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 90px;
+            height: 80px;
+            margin-right: 10px;
+        }
+        .navbar a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            background: rgba(0, 128, 0, 0.7);
+            padding: 30px;
+            width: 60%;
+            margin: 50px auto;
+            border-radius: 10px;
+            text-align: left;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .left, .right {
+            flex: 1;
+            padding: 15px;
+        }
+        .section-box {
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 20px;
+            margin-bottom: 20px;
+            width: 40%;
+        }
+        .input-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+            padding: 8px;
+        }
+        label {
+            flex: 1;
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        input {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 2px solid transparent;
+            text-align: center;
+            background: #f4f4f4;
+            width: 100%;
+        }
+        input.warning {
+            border: 2px solid red;
+        }
+        button {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            border: none;
+            background:green;
+            color: black;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: white;
+            color: black;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .graph-container {
+            display: flex;
+            justify-content: right; /* Aligns graph to the left */
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        canvas {
+            background: white;
+            border-radius: 5px;
+            height: 100%;
+            width: 100%;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+       <div class="logo">
+                <img src="/login/pngtree-go-green-logos-and-symbol-png-image_5642998.png" alt="CO2 Logo">
+                <h1>CO₂ CALCULATOR</h1>
+            </div>
+        <div>
+            <a href="#">Profile</a>
+            <a href="#">Home</a>
+            <a href="#">Contact Us</a>
+            <a href="#">Log Out</a>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="container">
+        <!-- Left Section: Limits, Inputs & Results -->
+        <div class="left">
+            <h3>LIMITS</h3>
+            <div class="section-box">
+                ⚡ <b>Electricity Usage:</b> 116.25 kWh/Month <br>
+                🚗 <b>Car Mileage:</b> 30-40 km/day <br>
+                ⛽ <b>Fuel Efficiency:</b> 16.1 KMPL <br>
+                🔥 <b>LPG Cylinders:</b> 6 Cylinders / Year <br>
+                🗑 <b>Waste Produced:</b> 15 to 35 kg/week
+            </div>
+
+            <h3>RESULTS</h3>
+            <div class="section-box">
+                <p id="result">Your results will appear here.</p>
+            </div>
+        </div>
+
+        <!-- Right Section: Graph -->
+        <div class="right">
+            <h3>GRAPH</h3>
+            <div class="graph-container">
+                <canvas id="usageChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateResult() {
+    let electricity = parseFloat(document.getElementById("electricity").value) || 0;
+    let mileage = parseFloat(document.getElementById("mileage").value) || 0;
+    let fuel = parseFloat(document.getElementById("fuel").value) || 0;
+    let lpg = parseFloat(document.getElementById("lpg").value) || 0;
+    let waste = parseFloat(document.getElementById("waste").value) || 0;
+
+    const limits = {
+        electricity: 116.25,
+        mileage: 40,
+        fuel: 16.1,
+        lpg: 6,
+        waste: 35
+    };
+
+    let message = "✅ All values are within safe limits!";
+    let exceeded = false;
+
+    if (electricity > limits.electricity) {
+        message = "⚠ Excess electricity usage detected! Try using LED bulbs or solar energy.";
+        exceeded = true;
+    }
+    if (mileage > limits.mileage) {
+        message += "<br>⚠ High car mileage! Use public transport or carpool.";
+        exceeded = true;
+    }
+    if (fuel < limits.fuel) {
+        message += "<br>⚠ Low fuel efficiency! Keep tires properly inflated and drive smoothly.";
+        exceeded = true;
+    }
+    if (lpg > limits.lpg) {
+        message += "<br>⚠ High LPG consumption! Use energy-efficient stoves and limit unnecessary cooking.";
+        exceeded = true;
+    }
+    if (waste > limits.waste) {
+        message += "<br>⚠ Too much waste produced! Reduce, reuse, and recycle.";
+        exceeded = true;
+    }
+
+    document.getElementById("result").innerHTML = exceeded ? message : "✅ Your usage is within safe limits! Keep up the good work!";
+    
+    updateGraph([electricity, mileage, fuel, lpg, waste]);
+}
+
+function updateGraph(userData) {
+    let ctx = document.getElementById('usageChart').getContext('2d');
+
+    if (window.usageChartInstance) {
+        window.usageChartInstance.destroy();
+    }
+
+    window.usageChartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['Electricity', 'Mileage', 'Fuel', 'LPG', 'Waste'],
+            datasets: [{
+                data: userData,
+                backgroundColor: ['red', 'blue', 'purple', 'orange', 'gray']
+            }]
+        }
+    });
+}
+</script>
+
+</body>
+</html>
